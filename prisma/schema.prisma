@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model todos {
+  title String? @db.VarChar(100)
+  id   String  @id @unique @default(uuid()) @db.Uuid
+}
+
+model users {
+  civility Int @db.Integer
+  id String @id @unique @default(uuid()) @db.Uuid
+  username String @db.VarChar(100)
+  lastname String @db.VarChar(100)
+  email String @unique @db.VarChar(60)
+  password String @unique @db.VarChar(300)
+  phone String @unique @db.VarChar(20)
+  doubleAuth Boolean @db.Boolean
+  registerToken String? @db.VarChar(300) // token du register
+  registerDate DateTime? @db.Date  // date du register
+  updateDate DateTime? @db.Date // date du update
+  rememberToken String? @db.VarChar(300) // token du remember
+  forgetToken String? @db.VarChar(300) // token du update
+  forgetDate DateTime? @db.Date // date du update
+  try5 Boolean @db.Boolean // 5 essais de connexion
+  try10 Boolean @db.Boolean // 10 essais de connexion
+  tokenRevalidateAccount String? @db.VarChar(300) // token de revalidation de compte
+  revalitateAccountDate DateTime? @db.Date // date de revalidation de compte  
+  role Int @db.Integer // role de l'utilisateur
+}
